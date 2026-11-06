@@ -19,13 +19,13 @@ builder.Services.AddOpenApi();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// 2. Configurar CORS (Para permitir Angular en Render y Local)
+// 2. Configurar CORS (Para permitir Angular en GitHub Pages y Local)
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAngular", policy =>
         policy.WithOrigins(
             "http://localhost:4200",
-            "\"https://freisterortizguevara-wq.github.io\"" // <-- Permite cualquier subdominio de Render
+            "https://freisterortizguevara-wq.github.io" // <-- URL CORREGIDA (sin comillas escapadas)
         )
         .AllowAnyHeader()
         .AllowAnyMethod());
