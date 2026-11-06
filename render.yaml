@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: inovait-frontend
+    env: static
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist/GestionMatriculas.Client
+    rootDir: Frontend/GestionMatriculas.Client
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
