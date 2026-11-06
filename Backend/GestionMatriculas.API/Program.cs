@@ -1,12 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using GestionMatriculas.API.Data;
-using System; // Necesario para Environment
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// --- CONFIGURACIÓN PARA RAILWAY (PUERTO DINÁMICO) ---
-// Railway asigna un puerto en la variable de entorno PORT. 
-// Si no existe, usa el 8080 por defecto.
+// --- CONFIGURACIÓN PARA RENDER (PUERTO DINÁMICO) ---
 var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
 builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
 // ---------------------------------------------------
@@ -21,13 +19,13 @@ builder.Services.AddOpenApi();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// 2. Configurar CORS (Para que Angular y Vercel puedan conectarse)
+// 2. Configurar CORS (Para permitir Angular en Render y Local)
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAngular", policy =>
         policy.WithOrigins(
             "http://localhost:4200",
-            "https://*.vercel.app" // Permite cualquier subdominio de Vercel
+            "\"https://freisterortizguevara-wq.github.io\"" // <-- Permite cualquier subdominio de Render
         )
         .AllowAnyHeader()
         .AllowAnyMethod());
@@ -45,11 +43,10 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-// Nota: Comentamos UseHttpsRedirection porque en producción (Railway) 
-// el proxy ya maneja el HTTPS. Si lo dejamos, puede causar un bucle infinito de redirección.
+// Nota: Comentamos UseHttpsRedirection para evitar bucles de redirección en producción.
 // app.UseHttpsRedirection(); 
 
-// 3. Usar CORS (Debe ir antes de Authorization y MapControllers)
+// 3. Usar CORS
 app.UseCors("AllowAngular");
 
 app.UseAuthorization();
@@ -61,7 +58,6 @@ using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
-    // Si no hay colegios, los creamos
     if (!context.Colegios.Any())
     {
         context.Colegios.AddRange(
