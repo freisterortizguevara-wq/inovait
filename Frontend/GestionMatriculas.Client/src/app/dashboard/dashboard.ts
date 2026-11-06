@@ -51,7 +51,6 @@ export class DashboardComponent implements OnInit {
     plugins: { legend: { position: 'bottom', labels: { color: '#e2e8f0', padding: 20 } } }
   };
 
-  // Inyectamos ChangeDetectorRef para forzar la actualización visual
   constructor(private http: HttpClient, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
@@ -59,7 +58,8 @@ export class DashboardComponent implements OnInit {
   }
 
   cargarEstadisticas() {
-    this.http.get<any>('/api/Dashboard/estadisticas').subscribe({
+    // URL actualizada a Render
+    this.http.get<any>('https://inovait-backend.onrender.com/api/Dashboard/estadisticas').subscribe({
       next: (data) => {
         console.log("Datos recibidos del Backend:", data);
         

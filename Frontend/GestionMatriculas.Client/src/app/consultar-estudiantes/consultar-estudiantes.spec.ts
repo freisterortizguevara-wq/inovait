@@ -23,7 +23,8 @@ export class ConsultarEstudiantesComponent {
   constructor(private http: HttpClient) {}
 
   buscar() {
-    const url = `/api/Estudiantes/filtrar?colegioId=${this.filtro.colegioId}&gradoId=${this.filtro.gradoId}&anio=${this.filtro.anio}`;
+    // URL actualizada a Render
+    const url = `https://inovait-backend.onrender.com/api/Estudiantes/filtrar?colegioId=${this.filtro.colegioId}&gradoId=${this.filtro.gradoId}&anio=${this.filtro.anio}`;
     
     this.http.get<any[]>(url).subscribe({
       next: (data) => {
@@ -39,7 +40,8 @@ export class ConsultarEstudiantesComponent {
   // --- FUNCIÓN DE ELIMINAR ---
   eliminarEstudiante(id: number) {
     if (confirm('¿Estás seguro de que deseas eliminar este estudiante?')) {
-      this.http.delete(`/api/Estudiantes/${id}`).subscribe({
+      // URL actualizada a Render
+      this.http.delete(`https://inovait-backend.onrender.com/api/Estudiantes/${id}`).subscribe({
         next: () => {
           alert('Estudiante eliminado con éxito.');
           this.buscar(); // Recargar la tabla
@@ -71,7 +73,8 @@ export class ConsultarEstudiantesComponent {
       grupo: nuevoGrupo
     };
 
-    this.http.put(`/api/Estudiantes/${est.estudianteId}`, dtoActualizacion).subscribe({
+    // URL actualizada a Render
+    this.http.put(`https://inovait-backend.onrender.com/api/Estudiantes/${est.estudianteId}`, dtoActualizacion).subscribe({
       next: () => {
         alert('Estudiante actualizado con éxito.');
         this.buscar();

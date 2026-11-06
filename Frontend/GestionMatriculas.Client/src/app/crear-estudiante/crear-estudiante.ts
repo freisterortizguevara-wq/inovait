@@ -7,8 +7,8 @@ import { CommonModule } from '@angular/common';
   selector: 'app-crear-estudiante',
   standalone: true,
   imports: [FormsModule, CommonModule],
-  templateUrl: './crear-estudiante.html', // <-- Quitamos .component
-  styleUrl: './crear-estudiante.css'      // <-- Quitamos .component
+  templateUrl: './crear-estudiante.html',
+  styleUrl: './crear-estudiante.css'
 })
 export class CrearEstudianteComponent {
   estudiante = {
@@ -23,12 +23,12 @@ export class CrearEstudianteComponent {
   mensaje: string = '';
 
   constructor(private http: HttpClient) {}
-    guardar() {
+
+  guardar() {
     // 1. Formatear la fecha a YYYY-MM-DD
     let fechaFormateada = this.estudiante.fechaNacimiento;
     if (fechaFormateada) {
       const partes = fechaFormateada.split('/');
-      // Si el navegador envía DD/MM/YYYY, lo convertimos
       if (partes.length === 3) {
         fechaFormateada = `${partes[2]}-${partes[1]}-${partes[0]}`;
       }
@@ -40,7 +40,8 @@ export class CrearEstudianteComponent {
       fechaNacimiento: fechaFormateada
     };
 
-    this.http.post('/api/Estudiantes', payload)
+    // 3. Petición a Render
+    this.http.post('https://inovait-backend.onrender.com/api/Estudiantes', payload)
       .subscribe({
         next: (res: any) => {
           this.mensaje = '¡Estudiante guardado con éxito!';
@@ -48,10 +49,8 @@ export class CrearEstudianteComponent {
           this.estudiante.grupo = '';
         },
         error: (err) => {
-          // Aquí capturamos el mensaje exacto del backend
           this.mensaje = 'Error al guardar: ' + (err.error?.error || err.message);
         }
       });
   }
-  
 }
