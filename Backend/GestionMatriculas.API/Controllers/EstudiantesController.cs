@@ -54,7 +54,7 @@ namespace GestionMatriculas.API.Controllers
             }
         }
 
-        // 2. CONSULTAR
+        // 2. CONSULTAR CON FILTROS
         [HttpGet("filtrar")]
         public async Task<IActionResult> ConsultarEstudiantes(int colegioId, int gradoId, int anio)
         {
@@ -71,6 +71,34 @@ namespace GestionMatriculas.API.Controllers
                         Grado = m.Grado!.Nombre,
                         Grupo = m.Grupo,
                         Anio = m.Anio
+                    })
+                    .ToListAsync();
+
+                return Ok(resultados);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.InnerException?.Message ?? ex.Message });
+            }
+        }
+
+        // NUEVO: CONSULTAR TODOS (SIN FILTROS)
+        [HttpGet("todos")]
+        public async Task<IActionResult> ObtenerTodos()
+        {
+            try
+            {
+                var resultados = await _context.Matriculas
+                    .Include(m => m.Estudiante)
+                    .Include(m => m.Grado)
+                    .Select(m => new
+                    {
+                        EstudianteId = m.EstudianteId,
+                        NombreEstudiante = m.Estudiante!.Nombre,
+                        Grado = m.Grado!.Nombre,
+                        Grupo = m.Grupo,
+                        Anio = m.Anio,
+                        ColegioId = m.Estudiante!.ColegioId
                     })
                     .ToListAsync();
 
