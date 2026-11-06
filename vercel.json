@@ -1,6 +1,6 @@
 {
   "buildCommand": "npm run build",
-  "outputDirectory": "Frontend/GestionMatriculas.Client/dist/GestionMatriculas.Client",
+  "outputDirectory": "Frontend/GestionMatriculas.Client/dist/GestionMatriculas.Client/browser",
   "rewrites": [
     {
       "source": "/(.*)",
