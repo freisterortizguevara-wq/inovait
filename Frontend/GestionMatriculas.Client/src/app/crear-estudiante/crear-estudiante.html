@@ -1,0 +1,46 @@
+<div class="card">
+  <div class="card-header">
+    <h2>Registrar Estudiante</h2>
+    <p>Ingresa los datos para matricular al alumno en el sistema.</p>
+  </div>
+  
+  <div *ngIf="mensaje" class="alert" [ngClass]="{'alert-success': !mensaje.includes('Error'), 'alert-error': mensaje.includes('Error')}">
+    {{ mensaje }}
+  </div>
+
+  <form (ngSubmit)="guardar()" #miFormulario="ngForm" class="form-grid">
+    <div class="form-group full-width">
+      <label>Nombre Completo</label>
+      <input type="text" [(ngModel)]="estudiante.nombre" name="nombre" placeholder="Ej. Juan Pérez" required>
+    </div>
+    
+    <div class="form-group">
+      <label>Fecha de Nacimiento</label>
+      <input type="date" [(ngModel)]="estudiante.fechaNacimiento" name="fechaNacimiento" required>
+    </div>
+
+    <div class="form-group">
+      <label>Año Escolar</label>
+      <input type="number" [(ngModel)]="estudiante.anio" name="anio" required>
+    </div>
+
+    <div class="form-group">
+      <label>Colegio (ID)</label>
+      <input type="number" [(ngModel)]="estudiante.colegioId" name="colegioId" required>
+    </div>
+
+    <div class="form-group">
+      <label>Grado (ID)</label>
+      <input type="number" [(ngModel)]="estudiante.gradoId" name="gradoId" required>
+    </div>
+
+    <div class="form-group full-width">
+      <label>Grupo</label>
+      <input type="text" [(ngModel)]="estudiante.grupo" name="grupo" placeholder="Ej. Mañana, Tarde" required>
+    </div>
+    
+    <button type="submit" [disabled]="!miFormulario.valid" class="btn-primary">
+      Guardar Matrícula
+    </button>
+  </form>
+</div>

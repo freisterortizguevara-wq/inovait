@@ -1,0 +1,17 @@
+# Dependencias
+node_modules/
+dist/
+bin/
+obj/
+
+# Visual Studio
+.vs/
+*.user
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+*.log
+
+# Entornos
+.env

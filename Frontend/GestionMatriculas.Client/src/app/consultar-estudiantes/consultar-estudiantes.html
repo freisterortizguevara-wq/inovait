@@ -1,0 +1,56 @@
+<div class="card">
+  <div class="card-header">
+    <h2>Directorio de Estudiantes</h2>
+    <p>Filtra por colegio, grado y año para gestionar las matrículas.</p>
+  </div>
+
+  <div class="filters">
+    <div class="form-group">
+      <label>Colegio ID</label>
+      <input type="number" [(ngModel)]="filtro.colegioId">
+    </div>
+    <div class="form-group">
+      <label>Grado ID</label>
+      <input type="number" [(ngModel)]="filtro.gradoId">
+    </div>
+    <div class="form-group">
+      <label>Año</label>
+      <input type="number" [(ngModel)]="filtro.anio">
+    </div>
+    
+    <!-- Botones de acción -->
+    <button (click)="buscar()" class="btn-search">Buscar</button>
+    <button (click)="exportarExcel()" class="btn-excel">📥 Exportar Excel</button>
+  </div>
+
+  <div class="table-container" *ngIf="buscado">
+    <table class="modern-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Estudiante</th>
+          <th>Grado</th>
+          <th>Grupo</th>
+          <th>Año</th>
+          <th class="text-right">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let est of estudiantes">
+          <td><span class="badge">#{{ est.estudianteId }}</span></td>
+          <td class="font-medium">{{ est.nombreEstudiante }}</td>
+          <td>{{ est.grado }}</td>
+          <td>{{ est.grupo }}</td>
+          <td>{{ est.anio }}</td>
+          <td class="text-right action-buttons">
+            <button (click)="actualizarEstudiante(est)" class="btn-icon btn-edit" title="Editar">✏️</button>
+            <button (click)="eliminarEstudiante(est.estudianteId)" class="btn-icon btn-delete" title="Eliminar">🗑️</button>
+          </td>
+        </tr>
+        <tr *ngIf="estudiantes.length === 0">
+          <td colspan="6" class="no-data">No hay estudiantes que coincidan con los filtros.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

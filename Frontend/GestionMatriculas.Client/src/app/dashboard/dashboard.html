@@ -1,0 +1,81 @@
+<div class="dashboard-container">
+  <div class="header">
+    <h2>Panel de Control</h2>
+    <p>Resumen general de la matrícula en la ciudad.</p>
+  </div>
+
+  <!-- Tarjetas de Estadísticas -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon">👨‍🎓</div>
+      <div class="stat-info">
+        <h3>Total Estudiantes</h3>
+        <p class="stat-number">{{ totales.totalEstudiantes }}</p>
+        <span class="stat-trend">En el sistema</span>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">🏫</div>
+      <div class="stat-info">
+        <h3>Colegios Registrados</h3>
+        <p class="stat-number">{{ totales.totalColegios }}</p>
+        <span class="stat-trend">En la ciudad</span>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">👩‍🏫</div>
+      <div class="stat-info">
+        <h3>Docentes Contratados</h3>
+        <p class="stat-number">{{ totales.totalDocentes }}</p>
+        <span class="stat-trend">Activos</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tarjetas de Edad (Pregunta 2 del PDF) -->
+  <div class="stats-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 30px;">
+    <div class="stat-card" style="border-left: 4px solid #4ade80;">
+      <div class="stat-info">
+        <h3>Niños entre 3 y 7 años</h3>
+        <p class="stat-number">{{ edades.entre3y7 }}</p>
+      </div>
+    </div>
+    <div class="stat-card" style="border-left: 4px solid #facc15;">
+      <div class="stat-info">
+        <h3>Niños entre 8 y 12 años</h3>
+        <p class="stat-number">{{ edades.entre8y12 }}</p>
+      </div>
+    </div>
+    <div class="stat-card" style="border-left: 4px solid #f87171;">
+      <div class="stat-info">
+        <h3>Mayores de 12 años</h3>
+        <p class="stat-number">{{ edades.mayores12 }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gráficas -->
+  <div class="charts-grid">
+    <div class="chart-card">
+      <h3>Matrículas por Grado</h3>
+      <div class="chart-wrapper">
+        <canvas baseChart
+          [data]="barChartData"
+          [options]="barChartOptions"
+          [type]="barChartType">
+        </canvas>
+      </div>
+    </div>
+    
+    <div class="chart-card">
+      <h3>Distribución por Sector</h3>
+      <div class="chart-wrapper">
+        <canvas baseChart
+          [data]="doughnutChartData"
+          [options]="doughnutChartOptions"
+          [type]="doughnutChartType">
+        </canvas>
+      </div>
+    </div>
+  </div>
+</div>
